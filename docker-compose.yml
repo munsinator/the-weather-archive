@@ -1,0 +1,7 @@
+services:
+  the-weather-archive:
+    image: twa-web
+    container_name: web
+    build: ./frontend
+    ports:
+      - "80:80"
