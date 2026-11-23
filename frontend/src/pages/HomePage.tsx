@@ -1,42 +1,42 @@
 import { useState } from 'react'
-import type { FormEvent } from 'react'
 
 // Example topics
-const topics = ['Vienna', 'Graz', 'Linz']
 
 export default function HomePage() {
-  const [query, setQuery] = useState('')
-  const [selectedTopic, setSelectedTopic] = useState('')
-  const [error, setError] = useState('')
-  const suggestions = query.trim() && !selectedTopic
-    ? topics.filter((topic) => topic.toLowerCase().includes(query.trim().toLowerCase()))
-    : []
+  const [query, setQuery] = useState('');
+  const [selectedTopic, setSelectedTopic] = useState('');
 
-  function search(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    if (!selectedTopic) {
-      setError('Please choose a topic from the suggestions before searching.')
-      return
-    }
-    window.location.search = new URLSearchParams({ topic: selectedTopic }).toString()
+  function handleQuery(event: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value);
+    console.log('Query:', event.target.value);
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    // Triggered by pressing Enter in the input field or clicking a suggested topic
+    event.preventDefault();
+    setSelectedTopic(query); //Note: This is where you would handle the search logic, e.g., making an API call or filtering data based on the query.
+    console.log('Selected topic:', selectedTopic);
+    console.log('Submitted query:', query);
   }
 
   return (
     <>
-      <header><h1>The Weather Archive</h1></header>
+      <header>
+        <h1 className="text-5xl font-bold text-blue-600 m-4">The Weather Archive</h1>
+      </header>
       <main>
-        <form onSubmit={search}>
-          <label htmlFor="topic">Search for a topic</label>{' '}
-          <input id="topic" type="search" placeholder="e.g. Vienna"
-            autoComplete="off" value={query}
-            onChange={(event) => {
-              setQuery(event.target.value)
-              setSelectedTopic('')
-              setError('')
-            }} />{' '}
-          <button type="submit">Search</button>
-          {suggestions.length > 0 && (
-            <ul aria-label="Suggested topics">
+        <form className="flex flex-col items-center justify-center m-4" onSubmit={handleSubmit}>
+          <div className="flex gap-3 w-full">
+            <input id="topic" type="search" placeholder="Vienna, Graz, Linz..."
+              autoComplete="off" value={query}
+              onChange={handleQuery}
+              className="bg-white border border-blue-800 p-2 rounded-3xl w-full"
+            />
+            <button type="submit" className="bg-blue-600 text-white p-2 rounded-3xl">Search</button>
+          </div>
+          {/* Dropdown suggestions */}
+          {/*suggestions.length > 0 && (
+            <ul className="bg-white border border-blue-800 rounded-3xl mt-2 w-full">
               {suggestions.map((topic) => (
                 <li key={topic}>
                   <button type="button" onClick={() => {
@@ -47,11 +47,8 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-          )}
-          {query.trim() && !selectedTopic && suggestions.length === 0 && (
-            <p>No matching topics found.</p>
-          )}
-          {error && <p role="alert">{error}</p>}
+          )*/}
+          <div></div>
         </form>
       </main>
     </>
