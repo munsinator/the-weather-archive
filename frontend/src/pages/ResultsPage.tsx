@@ -1,36 +1,41 @@
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "../styles/datepicker.css"; 
+
 export default function ResultsPage({ topic }: { topic: string }) {
+  const [startDate, setStartDate] = useState(new Date(3, 1, 2026)); 
+  const message = `No data available`;
+  
   return (
     <>
-      <header><a href={window.location.pathname}>The Weather Archive</a></header>
-      <main>
-        <h1>{topic}</h1>
-        <section aria-labelledby="period-heading">
-          <h2 id="period-heading">Time period</h2>
-          <p>
-            <label htmlFor="date">Date</label>{' '}
-            <input id="date" type="date" disabled />
-          </p>
-          <p>
-            <label htmlFor="hour">Hour of the day</label>{' '}
-            <input id="hour" type="range" min="0" max="23" defaultValue="0" disabled />
-          </p>
-          <p>Available dates and hours will appear when data is connected.</p>
-        </section>
-        <section aria-labelledby="video-heading">
-          <h2 id="video-heading">Weather video</h2>
-          <video controls aria-label={`Weather compilation for ${topic}`} />
-          <p>No video available yet.</p>
-        </section>
-        <section aria-labelledby="metadata-heading">
-          <h2 id="metadata-heading">Weather metadata</h2>
-          <p>The temperature, humidity and air pressure plot will appear here.</p>
-          <dl>
-            <dt>Temperature</dt><dd>No data</dd>
-            <dt>Humidity</dt><dd>No data</dd>
-            <dt>Air pressure</dt><dd>No data</dd>
-          </dl>
-        </section>
-      </main>
+      <h1 className="text-3xl font-bold text-blue-800 mt-12 mb-12">{topic}</h1>
+        <div className="flex flex-col gap-16 items-center justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <section className="border-3 border-blue-800 rounded-3xl p-4">
+              <h2 className="text-xl font-bold text-blue-800">Choose a time period:</h2>
+              <p className="flex text-left items-center mt-4 gap-3">
+                <label htmlFor="date">Date: </label>
+                <DatePicker id="date" selected={startDate} 
+                            //onChange={(date) => setStartDate(date)} 
+                            className="w-full border border-gray-300 bg-white px-4 py-2 rounded-3xl"
+                            calendarClassName="weather-calendar"
+                            dateFormat="dd.MM.yyyy"/>
+              </p>
+              <p className="flex text-left mt-4 gap-3">
+                <label htmlFor="hour">Hour: </label>
+                <input id="hour" type="range" min="0" max="23" defaultValue="0" />
+              </p>
+            </section>
+
+            <section className="border-3 border-blue-800 rounded-3xl p-4">
+              <h2 className="text-xl font-bold text-blue-800 mb-4">Metadata</h2>
+              <p className="text-left">Temperature: {message}</p>
+              <p className="text-left">Humidity: {message}</p>
+              <p className="text-left">Air pressure: {message}</p>
+            </section>            
+        </div>
+      </div>
     </>
   )
 }

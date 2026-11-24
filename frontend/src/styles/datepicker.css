@@ -1,0 +1,16 @@
+.weather-calendar {
+  border: 1px solid #1e40af;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.weather-calendar .react-datepicker__header {
+  background-color: #dbeafe;
+  border-bottom: 1px solid #1e40af;
+}
+
+.weather-calendar .react-datepicker__day--selected {
+  background-color: #1e40af;
+  border-radius: 50%;
+}
