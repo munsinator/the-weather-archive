@@ -20,4 +20,4 @@ docker compose up --build   # http://localhost
 ```
 
 ## Hand-In 1 (Frontend Draft)
-Static draft (homepage + city page mockup), hosted on AWS S3. See `docs/hand-in-1-deploy.md`.
+Static draft (homepage + city page mockup), hosted on AWS S3.
